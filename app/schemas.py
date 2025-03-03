@@ -19,7 +19,7 @@ class UserCreate(BaseModel):
     password : str
     is_driver : bool = False
 
-class userResponse(BaseModel):
+class UserResponse(BaseModel):
     
     id : pyObjectId
     name : str
