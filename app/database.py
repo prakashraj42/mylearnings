@@ -5,11 +5,15 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-MONGO_URL = "MONGO_URI"
-DB_NAME = "bike booking"
+MONGO_URL = os.getenv("MONGO_URI")
+print(MONGO_URL)
+DB_NAME = "bike_booking"
 
-client = AsyncIOMotorClient(MONGO_URL)
-db = client(DB_NAME)
-
+client = AsyncIOMotorClient("mongodb://localhost:27017/")
+db = client[DB_NAME]
+user_coll = db["user_collection"]
+booking_coll = db["booking_collection"]
+async def get_db():
+    yield db
 
 

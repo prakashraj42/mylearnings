@@ -1,0 +1,14 @@
+# Ignore all _pycache_ directories
+_pycache_/
+
+# Ignore the venv
+env/
+
+# Ignore the logs directory
+logs/
+
+# Ignore the .env file
+.env
+
+# Ignore the uploads directory
+uploads/
