@@ -2,15 +2,15 @@ from pydantic import BaseModel ,EmailStr
 from typing import Optional
 from bson import ObjectId
 
-class pyObjectId(str):
+# class PyObjectId(str):
     
-    def __get_validators__(cls):
-        yield cls.validate
+#     def __get_validators__(cls):
+#         yield cls.validate
 
-    def validate(cls, v):
-        if not ObjectId.is_valid(v):
-            raise ValueError("invalid objecid")
-        return str(v)
+#     def validate(cls, v):
+#         if not ObjectId.is_valid(v):
+#             raise ValueError("invalid objecid")
+#         return str(v)
 
 class UserCreate(BaseModel):
 
@@ -19,17 +19,17 @@ class UserCreate(BaseModel):
     password : str
     is_driver : bool = False
 
-class UserResponse(BaseModel):
+# class UserResponse(BaseModel):
     
-    id : pyObjectId
-    name : str
-    email : str
-    is_driver : bool
+#     id : PyObjectId
+#     name : str
+#     email : str
+#     is_driver : bool
 
 
-    class config:
-        orm_mode = True
-        json_encoder = {ObjectId: str}
+#     class config:
+#         orm_mode = True
+#         json_encoder = {ObjectId: str}
 
 
 
@@ -39,18 +39,18 @@ class BookingCreatation(BaseModel):
     drop_location : str
     fare : float
 
-class BookingResponse(BaseModel):
+# class BookingResponse(BaseModel):
 
-    id : pyObjectId
-    user_id : pyObjectId
-    driver_id : Optional[pyObjectId] = None 
-    pickup_location : str
-    drop_location : str
-    fare : str
-    status : str
+#     id : PyObjectId
+#     user_id : PyObjectId
+#     driver_id : Optional[PyObjectId] = None 
+#     pickup_location : str
+#     drop_location : str
+#     fare : str
+#     status : str
 
-    class config:
-        orm_mode = True
-        json_encoder = {ObjectId : str}
+#     class config:
+#         orm_mode = True
+#         json_encoder = {ObjectId : str}
 
 
