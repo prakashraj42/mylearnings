@@ -6,11 +6,13 @@ from dotenv import load_dotenv
 load_dotenv()
 
 MONGO_URL = os.getenv("MONGO_URI")
-print(MONGO_URL)
+
 DB_NAME = "bike_booking"
 
 client = AsyncIOMotorClient("mongodb://localhost:27017/")
 db = client[DB_NAME]
+
+
 user_coll = db["user_collection"]
 booking_coll = db["booking_collection"]
 async def get_db():
