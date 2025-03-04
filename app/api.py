@@ -46,3 +46,4 @@ async def Create_booking(booking : schemas.BookingCreatation, user_id :str):
     return {**new_booking, "id":str (result.inserted_id)}
 
 
+print("som")
