@@ -14,6 +14,7 @@ db = client[DB_NAME]
 
 
 user_coll = db["user_collection"]
+biker_coll = db["biker_collection"]
 booking_coll = db["booking_collection"]
 async def get_db():
     yield db
