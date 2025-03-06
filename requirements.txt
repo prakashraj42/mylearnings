@@ -7,3 +7,4 @@ passlib
 pydantic[email]
 python-dotenv
 bcrypt
+requests
