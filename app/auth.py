@@ -35,22 +35,3 @@ def decode_access_token(token: str) -> dict:
 
 
 
-
-# def run():
-#     password = "my_secure_password"
-#     hashed_password = hash_password(password)
-#     print("Hashed Password:", hashed_password)
-
-#     is_valid = verify_password(password, hashed_password)
-#     print("Password Valid:", is_valid)
-
-#     token_data = {"sub": "user123"}  # Example payload
-#     token = create_access_token(token_data)
-#     print("Generated Token:", token)
-
-#     decoded_data = decode_access_token(token)
-#     print("Decoded Token Data:", decoded_data)
-
-# # Run the function
-# run()
-

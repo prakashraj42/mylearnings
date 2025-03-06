@@ -4,6 +4,7 @@ from app.schemas import user_register,Login
 from app. database import db, user_coll, biker_coll 
 from app.auth import create_access_token
 from bson import ObjectId
+from app.map import get_address_from_coordinates
 
 async def resgitration(user : user_register):
     
@@ -66,9 +67,10 @@ async def get_bikers():
         raise HTTPException(status_code= 400, detail= "bikers not found")
     return [serialize_document(biker) for biker in biker]
     
+
+
+
     
-
-
 
     
         

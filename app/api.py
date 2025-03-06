@@ -2,7 +2,7 @@ from fastapi import APIRouter, FastAPI , Response
 from  app.schemas import user_register, Login
 from app.service import resgitration, login, get_users, get_bikers
 from typing import Optional
-from app.map import get_address_from_coordinates
+from app.map import get_address_from_coordinates, get_distance_between_locations
 
 router = APIRouter()
 
@@ -23,5 +23,6 @@ async def get_biker():
     return await get_bikers()
 
 @router.get("/get-location/")
-async def get_user_location(address):
-    return await get_address_from_coordinates(address)
+async def get_user_location(start, destination):
+    
+    return await get_distance_between_locations(start_address= start, destination_address= destination)
