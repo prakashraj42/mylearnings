@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Response
 from motor.motor_asyncio import AsyncIOMotorClient
 from app.schemas import user_register,Login
 from app. database import db, user_coll, biker_coll 
@@ -7,7 +7,10 @@ from bson import ObjectId
 
 async def resgitration(user : user_register):
     
-    collection = biker_coll if user.is_driver else user_coll 
+
+    collection = biker_coll if user.is_driver else user_coll
+
+
 
 
     existing_entry = await collection.find_one({"email": user.email})
@@ -21,14 +24,17 @@ async def resgitration(user : user_register):
     inserter_id= await collection.insert_one(user_data)  
 
 
-    # token_data = {"sub" : user.email , "role" : "biker" if user.is_driver else "user"}  
-    
-    # token = create_access_token(token_data)
-
     return{"message" : "register successfully", "role" : "biker" if user.is_driver else "user", "inserterd_id": str(ObjectId(inserter_id.inserted_id))} #"token" : token 
 
 
-async def login(login: Login, user_type : bool ): 
+async def login(login: Login, user_type : bool , responses: Response): 
+    
+    token_data = {"sub" : login.email , "role" : "biker" if user_type else "user"}  
+    
+    token = create_access_token(token_data)
+
+    responses.headers["Authorization"] = f"Bearer {token}"
+
     
     if user_type == False:
         user = await user_coll.find_one({"email" : login.email})
@@ -41,9 +47,24 @@ async def login(login: Login, user_type : bool ):
         if not biker:
             raise HTTPException(status_code= 400, detail="Account not found")
         return HTTPException (status_code= 200 , detail="Biker login successfully")
-    
 
 
+def serialize_document(doc):
+    return {**doc, "_id": str(doc["_id"])} if doc else None
+
+async def get_users():
+
+    user =  await user_coll.find().to_list(length = None)
+    if not user:
+        raise HTTPException(status_code= 400, detail= "users not found")
+    return [serialize_document(user) for user in user]
+
+async def get_bikers():
+
+    biker = await biker_coll.find().to_list(length = None)
+    if not biker:
+        raise HTTPException(status_code= 400, detail= "bikers not found")
+    return [serialize_document(biker) for biker in biker]
     
     
 
