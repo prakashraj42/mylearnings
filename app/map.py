@@ -61,20 +61,33 @@ async def get_distance_between_locations(start_address, destination_address):
     destination_coord = await get_address_from_coordinates(destination_address)
 
     if start_coord and destination_coord:
-        # Extract latitude and longitude correctly
+
         distance = await haversine_distance(
             start_coord["latitude"], start_coord["longitude"],
             destination_coord["latitude"], destination_coord["longitude"]
         )
+
+        total_fare = await  km_fare(distance)
 
         return {
             "start_location": start_address,
             "destination_location": destination_address,
             "start_coordinates": {"latitude": start_coord["latitude"], "longitude": start_coord["longitude"]},
             "destination_coordinates": {"latitude": destination_coord["latitude"], "longitude": destination_coord["longitude"]},
-            "distance_km": round(distance, 2)
-        }
+            "distance_km": round(distance, 2),
+            "Total_fare" : total_fare
+         }
     else:
         return {"error": "Could not find coordinates for one or both locations."}
 
-     
+
+async def km_fare(distance):
+
+    Per_km_fare = 10
+    Booking_fare = round(distance * Per_km_fare,2)
+    return Booking_fare
+
+
+
+
+
