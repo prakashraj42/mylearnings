@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to RUSHERO Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .email-header {
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 15px;
+            font-size: 24px;
+            border-radius: 10px 10px 0 0;
+        }
+        .email-body {
+            padding: 20px;
+            color: #333;
+            text-align: left;
+        }
+        .email-body p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .email-body ul {
+            list-style: none;
+            padding: 0;
+        }
+        .email-body li {
+            font-size: 16px;
+            padding: 8px 0;
+        }
+        .email-footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="email-container">
+        <div class="email-header">
+            Welcome to RUSHERO! 🚀
+        </div>
+        <div class="email-body">
+            <h2>Hello, {{ name }}!</h2>
+            <p>Thank you for registering on <strong>RUSHERO</strong>. We're excited to have you onboard!</p>
+            <p><strong>Your details:</strong></p>
+            <ul>
+                <li><strong>Email:</strong> {{ email }}</li>
+                <li><strong>Role:</strong> {{ role }}</li>
+            </ul>
+            <p>Get ready for a seamless bike booking experience!</p>
+            <a href="https://yourwebsite.com" class="btn">Explore RUSHERO</a>
+        </div>
+        <div class="email-footer">
+            &copy; 2024 RUSHERO | All Rights Reserved
+        </div>
+    </div>
+
+</body>
+</html>
