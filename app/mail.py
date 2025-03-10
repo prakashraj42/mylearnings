@@ -8,7 +8,8 @@ from pathlib import Path
 # Load environment variables
 load_dotenv()
 
-TEMPLATE_FOLDER = Path(r"D:\python\myleaningpartone\mylearnings\app\mail-template")
+TEMPLATE_FOLDER = Path(__file__).parent / "mail-template"
+print(TEMPLATE_FOLDER)
 
 # Ensure values are not None
 MAIL_USERNAME = os.getenv("EMAIL_USERNAME")
