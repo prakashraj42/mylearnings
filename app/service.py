@@ -1,11 +1,13 @@
-from fastapi import FastAPI, HTTPException, Response ,Depends ,UploadFile, File
-from motor.motor_asyncio import AsyncIOMotorClient
+from fastapi import FastAPI, HTTPException, Response ,Depends ,UploadFile, File, status
+from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorCollection
 from app.schemas import user_register,Login ,BikerRegister
 from app. database import db, user_coll, biker_coll , user_booking_info_coll
 from app.auth import create_access_token
 from bson import ObjectId
 from app.map import get_address_from_coordinates
 from app.mail import send_registration_email
+from app.models import UserOut
+
 async def user_resgitration(user : user_register):
     
     collection = user_coll
@@ -66,12 +68,25 @@ async def login(login: Login, user_type : bool , responses: Response, ):
 def serialize_document(doc):
     return {**doc, "_id": str(doc["_id"])} if doc else None
 
-async def get_users():
+async def get_users(db: AsyncIOMotorClient):
+    user_collection: AsyncIOMotorCollection = db["user_collection"]
+    users = await user_collection.find({}, {"_id": 0}).to_list(length=None)
 
-    user =  await user_coll.find().to_list(length = None)
-    if not user:
-        raise HTTPException(status_code= 400, detail= "users not found")
-    return [serialize_document(user) for user in user]
+    if not users:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No users found")
+    
+    total_users = []
+    for user in users:
+        user_data = UserOut(
+            username= user["name"],
+            email= user["email"],
+            password= user["password"],
+            is_driver= user["is_driver"]
+        )
+        total_users.append(user_data)
+    
+    print(total_users)
+    return total_users
 
 async def get_bikers():
 
