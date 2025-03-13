@@ -1,6 +1,6 @@
 from fastapi import APIRouter, FastAPI , Response, UploadFile, File, Depends
 from  app.schemas import user_register, Login, BikerRegister
-from app.service import user_resgitration, login, get_users, get_bikers,biker_resgitration
+from app.service import user_resgitration, login, get_users, get_bikers,biker_resgitration, biker_get_bookings, assign_biker, confirm_booking
 from typing import Optional 
 from app.map import get_address_from_coordinates, get_distance_between_locations, biker_location
 from app.auth import decode_access_token, get_current_user
@@ -35,7 +35,7 @@ async def get_user(token = Depends(get_current_user), db: AsyncIOMotorClient = D
 async def get_biker():
     return await get_bikers()
 
-@router.get("/Bike_Booking/", tags=["users"])
+@router.post("/Bike_Booking/", tags=["users"])
 async def get_user_location(start, destination):
     
     return await get_distance_between_locations(start_address= start, destination_address= destination)
@@ -45,5 +45,3 @@ async def get_biker_location(start):
     
     return await biker_location(starting_address =  start)
 
-# @router.post("/token")
-# async def 
