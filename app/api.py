@@ -43,3 +43,6 @@ async def get_biker_location(start):
     
     return await biker_location(starting_address =  start)
 
+@router.get("/test/")
+async def testing_function():
+    return {"msg": "testing the git revert function"}
