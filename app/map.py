@@ -1,3 +1,19 @@
+# import requests
+
+# def get_address_from_coordinates(latitude, longitude):
+#     url = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={latitude}&lon={longitude}"
+    
+#     try:
+#         response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
+#         response.raise_for_status()  # Raises an error for HTTP issues
+#         data = response.json()
+
+#         return data.get("display_name", "Address not found")
+#     except requests.exceptions.RequestException as e:
+#         return f"Error: {e}"
+
+
+
 import requests
 from math import radians, sin, cos, sqrt, atan2
 from app.database import user_booking_info_coll
@@ -70,10 +86,7 @@ async def get_distance_between_locations(start_address, destination_address):
                 "longitude": destination_coord["longitude"]
             },
             "distance_km": round(distance, 2),
-            "total_fare": total_fare,
-            "status": "pending",
-            "biker_id" : "biker"
-            
+            "total_fare": total_fare
         }
 
         inserted_booking = await user_booking_info_coll.insert_one(booking_data)
