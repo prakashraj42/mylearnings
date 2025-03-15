@@ -2,10 +2,11 @@ fastapi
 motor
 pydantic
 uvicorn
-jose
+python-jose
 passlib
 pydantic[email]
 python-dotenv
 bcrypt
 requests
 fastapi-mail
+python-multipart
