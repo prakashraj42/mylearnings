@@ -37,26 +37,21 @@ def create_access_token(data : dict) -> str:
 def decode_access_token(token: str):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        
         email = payload.get("sub")
-        print(email)
+
         role = payload.get("role")
-        print(role)
 
         if email is None or role is None:
             raise HTTPException(status_code=401, detail="Invalid Token")
-
         return {"sub": email, "role": role}
     
     except JWTError:
         raise HTTPException(status_code=401, detail="Invalid Token")
 
 async def get_current_user(token: str = Depends(oauth2_scheme), db: AsyncIOMotorClient = Depends(get_db)):
-    payload = decode_access_token(token= token)
+    payload = decode_access_token(token = token)
     user_collection: AsyncIOMotorCollection = db["user_collection"]
     user = await user_collection.find_one({"email": payload["sub"]})
-    
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
-    
     return user

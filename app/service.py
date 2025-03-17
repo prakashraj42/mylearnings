@@ -7,19 +7,22 @@ from bson import ObjectId
 from app.map import get_address_from_coordinates
 from app.mail import send_registration_email
 from app.models import UserOut
-
+import logger
 async def user_resgitration(user : user_register):
     
     collection = user_coll
 
+    logger.info("Finded the emil from user collection in db")
     existing_entry = await collection.find_one({"email": user.email})
 
     if existing_entry:
+        logger.info("Check the email id are exiting")
         raise HTTPException(status_code=400, detail="Email ID already exists in this role")
-    
     user_data = user.model_dump()
-
+    
+    logger.info("send the mail for user register ")
     await send_registration_email(user.email, user.name, "user")
+    
 
     inserter_id= await collection.insert_one(user_data)  
 
@@ -121,9 +124,6 @@ async def assign_biker(booking_id, biker_id):
         {"_id": booking_id},
         {"$set": {"biker_id": biker_id, "status": "pending"}}
     )
-
-
-
 
 async def confirm_booking(booking_id: str, biker_id: str):
     booking = await user_booking_info_coll.find_one({"_id": booking_id, "biker_id": biker_id})
